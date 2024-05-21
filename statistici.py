@@ -1,4 +1,5 @@
 import csv
+import json
 def numarPersoane():
     with open('Curs15/tema/persoane.csv','r',newline='') as csvFile:
         reader=csv.reader(csvFile)
@@ -9,18 +10,16 @@ def numarPersoane():
 # numarPersoane()
 
 def youngestPerson():
-    with open('Curs15/tema/persoane.csv','r',newline='') as csvFile:
-        reader=csv.reader(csvFile)
-        next(reader)
-        firstRow=next(reader)
-        min=int(firstRow[-1])
-        nume=firstRow[0]
-        prenume=firstRow[1]
-        for row in reader:
-            row[-1]=int(row[-1])
-            if min>row[-1]:
-                min=row[-1]
-                nume=row[0]
-                prenume=row[1]
+    with open('Curs15/tema/persoane.json','r') as jsonFile:
+        continut=json.load(jsonFile)
+        min=int(continut[0]['varsta'])
+        nume=continut[0]['nume']
+        prenume=continut[0]['prenume']
+        for person in continut:
+            person['varsta']=int(person['varsta'])
+            if min>person['varsta']:
+                min=person['varsta']
+                nume=person['nume']
+                prenume=person['prenume']
         print(f'{nume} {prenume} este cel mai tanar, avand {min} ani.')
 youngestPerson()

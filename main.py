@@ -1,4 +1,5 @@
 import json
+import csv
 def informatiiPersoane():
     n=int(input('n= '))
     dictionarPersoane={
@@ -16,4 +17,15 @@ def informatiiPersoane():
             if persoana<n-1:
                 jsonFile.write(',')
         jsonFile.write(']')
-informatiiPersoane()
+# informatiiPersoane()
+
+def jsonTocsv():
+    with open('Curs15/tema/persoane.json','r') as jsonFile:
+        continut=json.load(jsonFile)
+        numeColoane=continut[0].keys()
+        with open('Curs15/tema/persoane.csv','w',newline='') as csvFile:
+            writer=csv.DictWriter(csvFile,fieldnames=numeColoane)
+            writer.writeheader()
+            writer.writerows(continut)
+jsonTocsv()
+
